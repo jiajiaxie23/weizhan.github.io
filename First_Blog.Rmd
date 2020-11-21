@@ -1,0 +1,115 @@
+---
+title: "First post"
+author: "Zhan Wei"
+date: '2020-11-19'
+slug: []
+categories: R
+tags: R Markdown
+publishdate: '2020-11-19T01:24:04+11:00'
+comments: yes
+---
+Read time: around 5min
+
+# A blog about the very beginning 
+Today, I start to look for dataset for my visualization blog project. After changing topics and search websites for many times, I finally decided to set a dataset named US Population Estimates as my theme, it is sourced from United States Census Bureau and the topic is People and Population. This dataset contains 2835 rows and 106 columns with different categories such as sex, origin and race, and makes population prediction from the year 2016 to 2060. 
+
+First of all, let's look up some features about this dataset!
+
+```{r}
+usdataset=read.csv("/Users/zhanwei/Downloads/comm2501. r/COMM2501 Blog/US Population Estimates.csv")
+View(usdataset)
+
+```
+
+## How is the *mean of population* at different *ages* changes? For example: age.20, age.40,age.60,age.80 and age.100
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+a=mean(usdataset$Age.20)
+a
+b=mean(usdataset$Age.40)
+b
+c=mean(usdataset$Age.60)
+c
+d=mean(usdataset$Age.80)
+d
+e=mean(usdataset$Age.100)
+e
+group=c(a,b,c,d,e)
+group
+barplot(group,names.arg =c("Age.20","Age.40","Age.60","Age.80","Age.100"),main="Mean of population", xlab="Number of population", ylab="Age", col="darkgreen", horiz=TRUE)
+options(scipen = 999)
+```
+
+From the output above, we could know that age.40 takes the biggest part of the whole population, while the age.100 takes the least part, which is much smaller than other age groups. As we can see, the population age is mainly between 20 and 60. 
+
+# Want to enjoy more about the data?
+Let me show you a pie chart with different age groups. 
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+a=mean(usdataset$Age.20)
+a
+b=mean(usdataset$Age.40)
+b
+c=mean(usdataset$Age.60)
+c
+d=mean(usdataset$Age.80)
+d
+e=mean(usdataset$Age.100)
+e
+
+slices <- c(a,b,c,d,e)
+lbls <- c("Age.20", "Age.40", "Age.60", "Age.80", "Age.100")
+pct <- round(slices/sum(slices)*100)
+lbls <- paste(lbls, pct) # add percents to labels 
+lbls <- paste(lbls,"%",sep="") # ad % to labels
+pie(slices, labels = lbls, main="Pie Chart of Age Groups")
+```
+
+
+# Now, let's have a look at how the number of *Total.Population* would change with *sex*
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+install.packages("ggplot2")
+library(ggplot2)
+install.packages("tidyverse")
+library(tidyverse)
+
+ggplot(data=usdataset, mapping=aes(x=Total.Population, fill=Sex))+geom_density(alpha=.3)
+
+```
+
+Obviously, the graph is beautiful with population flows of three types of sex. Yeah, it is a bit meaningless, just continue browsing. 
+
+
+## What about the *total population* and the *origin* from 2016 to 2060? 
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+install.packages("tidyverse")
+library(tidyverse)
+install.packages("ggplot2")
+library(ggplot2)
+
+p=ggplot(data=usdataset,mapping=aes(x=Origin,y=Total.Population,colour=Origin))+geom_point()+geom_abline()
+p
+require(scales)
+p + scale_y_continuous(labels = comma)
+```
+
+From this point graph, it is easy to know that population is not hispanic is more than those is hispanic, around double times more. 
+
+## Thanks for your reading!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
